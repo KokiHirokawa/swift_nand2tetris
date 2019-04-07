@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		06C4DBE7225272F400872348 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C4DBE6225272F400872348 /* main.swift */; };
+		069612732259A5BC0097229D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069612722259A5BC0097229D /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		06C4DBE1225272F400872348 /* CopyFiles */ = {
+		0696126D2259A5BC0097229D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -23,12 +23,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		06C4DBE3225272F400872348 /* nand2tetris */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = nand2tetris; sourceTree = BUILT_PRODUCTS_DIR; };
-		06C4DBE6225272F400872348 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		0696126F2259A5BC0097229D /* compiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = compiler; sourceTree = BUILT_PRODUCTS_DIR; };
+		069612722259A5BC0097229D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		06C4DBE0225272F400872348 /* Frameworks */ = {
+		0696126C2259A5BC0097229D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -38,95 +38,95 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06C4DBDA225272F400872348 = {
+		069612662259A5BC0097229D = {
 			isa = PBXGroup;
 			children = (
-				06C4DBE5225272F400872348 /* nand2tetris */,
-				06C4DBE4225272F400872348 /* Products */,
+				069612712259A5BC0097229D /* compiler */,
+				069612702259A5BC0097229D /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		06C4DBE4225272F400872348 /* Products */ = {
+		069612702259A5BC0097229D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				06C4DBE3225272F400872348 /* nand2tetris */,
+				0696126F2259A5BC0097229D /* compiler */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		06C4DBE5225272F400872348 /* nand2tetris */ = {
+		069612712259A5BC0097229D /* compiler */ = {
 			isa = PBXGroup;
 			children = (
-				06C4DBE6225272F400872348 /* main.swift */,
+				069612722259A5BC0097229D /* main.swift */,
 			);
-			path = nand2tetris;
+			path = compiler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		06C4DBE2225272F400872348 /* nand2tetris */ = {
+		0696126E2259A5BC0097229D /* compiler */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 06C4DBEA225272F400872348 /* Build configuration list for PBXNativeTarget "nand2tetris" */;
+			buildConfigurationList = 069612762259A5BC0097229D /* Build configuration list for PBXNativeTarget "compiler" */;
 			buildPhases = (
-				06C4DBDF225272F400872348 /* Sources */,
-				06C4DBE0225272F400872348 /* Frameworks */,
-				06C4DBE1225272F400872348 /* CopyFiles */,
+				0696126B2259A5BC0097229D /* Sources */,
+				0696126C2259A5BC0097229D /* Frameworks */,
+				0696126D2259A5BC0097229D /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = nand2tetris;
-			productName = nand2tetris;
-			productReference = 06C4DBE3225272F400872348 /* nand2tetris */;
+			name = compiler;
+			productName = compiler;
+			productReference = 0696126F2259A5BC0097229D /* compiler */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		06C4DBDB225272F400872348 /* Project object */ = {
+		069612672259A5BC0097229D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = KokiHirokawa;
 				TargetAttributes = {
-					06C4DBE2225272F400872348 = {
+					0696126E2259A5BC0097229D = {
 						CreatedOnToolsVersion = 10.2;
 					};
 				};
 			};
-			buildConfigurationList = 06C4DBDE225272F400872348 /* Build configuration list for PBXProject "nand2tetris" */;
+			buildConfigurationList = 0696126A2259A5BC0097229D /* Build configuration list for PBXProject "compiler" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 06C4DBDA225272F400872348;
-			productRefGroup = 06C4DBE4225272F400872348 /* Products */;
+			mainGroup = 069612662259A5BC0097229D;
+			productRefGroup = 069612702259A5BC0097229D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				06C4DBE2225272F400872348 /* nand2tetris */,
+				0696126E2259A5BC0097229D /* compiler */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		06C4DBDF225272F400872348 /* Sources */ = {
+		0696126B2259A5BC0097229D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06C4DBE7225272F400872348 /* main.swift in Sources */,
+				069612732259A5BC0097229D /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		06C4DBE8225272F400872348 /* Debug */ = {
+		069612742259A5BC0097229D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -187,7 +187,7 @@
 			};
 			name = Debug;
 		};
-		06C4DBE9225272F400872348 /* Release */ = {
+		069612752259A5BC0097229D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -241,7 +241,7 @@
 			};
 			name = Release;
 		};
-		06C4DBEB225272F400872348 /* Debug */ = {
+		069612772259A5BC0097229D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -251,7 +251,7 @@
 			};
 			name = Debug;
 		};
-		06C4DBEC225272F400872348 /* Release */ = {
+		069612782259A5BC0097229D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -264,25 +264,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		06C4DBDE225272F400872348 /* Build configuration list for PBXProject "nand2tetris" */ = {
+		0696126A2259A5BC0097229D /* Build configuration list for PBXProject "compiler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				06C4DBE8225272F400872348 /* Debug */,
-				06C4DBE9225272F400872348 /* Release */,
+				069612742259A5BC0097229D /* Debug */,
+				069612752259A5BC0097229D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		06C4DBEA225272F400872348 /* Build configuration list for PBXNativeTarget "nand2tetris" */ = {
+		069612762259A5BC0097229D /* Build configuration list for PBXNativeTarget "compiler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				06C4DBEB225272F400872348 /* Debug */,
-				06C4DBEC225272F400872348 /* Release */,
+				069612772259A5BC0097229D /* Debug */,
+				069612782259A5BC0097229D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 06C4DBDB225272F400872348 /* Project object */;
+	rootObject = 069612672259A5BC0097229D /* Project object */;
 }
