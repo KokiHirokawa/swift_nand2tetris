@@ -12,9 +12,8 @@
 		069612A32259B4260097229D /* JackTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069612A22259B4260097229D /* JackTokenizer.swift */; };
 		069612A52259B43A0097229D /* CompilationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069612A42259B43A0097229D /* CompilationEngine.swift */; };
 		069612A72259B7CA0097229D /* RegExPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069612A62259B7CA0097229D /* RegExPattern.swift */; };
-		069612AB2259B8B70097229D /* String+RegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069612AA2259B8B70097229D /* String+RegEx.swift */; };
 		069612AD2259FC2F0097229D /* NSTextCheckingResult+subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069612AC2259FC2F0097229D /* NSTextCheckingResult+subscript.swift */; };
-		069612AF2259FC9D0097229D /* String+subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069612AE2259FC9D0097229D /* String+subscript.swift */; };
+		069612B1225A04CC0097229D /* String+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069612B0225A04CC0097229D /* String+Common.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,9 +35,8 @@
 		069612A22259B4260097229D /* JackTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackTokenizer.swift; sourceTree = "<group>"; };
 		069612A42259B43A0097229D /* CompilationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilationEngine.swift; sourceTree = "<group>"; };
 		069612A62259B7CA0097229D /* RegExPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegExPattern.swift; sourceTree = "<group>"; };
-		069612AA2259B8B70097229D /* String+RegEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RegEx.swift"; sourceTree = "<group>"; };
 		069612AC2259FC2F0097229D /* NSTextCheckingResult+subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextCheckingResult+subscript.swift"; sourceTree = "<group>"; };
-		069612AE2259FC9D0097229D /* String+subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+subscript.swift"; sourceTree = "<group>"; };
+		069612B0225A04CC0097229D /* String+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Common.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +90,7 @@
 		069612A82259B84A0097229D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				069612AA2259B8B70097229D /* String+RegEx.swift */,
-				069612AE2259FC9D0097229D /* String+subscript.swift */,
+				069612B0225A04CC0097229D /* String+Common.swift */,
 				069612AC2259FC2F0097229D /* NSTextCheckingResult+subscript.swift */,
 			);
 			path = Extensions;
@@ -158,11 +155,10 @@
 			files = (
 				069612AD2259FC2F0097229D /* NSTextCheckingResult+subscript.swift in Sources */,
 				069612A32259B4260097229D /* JackTokenizer.swift in Sources */,
-				069612AF2259FC9D0097229D /* String+subscript.swift in Sources */,
 				069612A12259B41A0097229D /* JackAnalyzer.swift in Sources */,
+				069612B1225A04CC0097229D /* String+Common.swift in Sources */,
 				069612732259A5BC0097229D /* main.swift in Sources */,
 				069612A52259B43A0097229D /* CompilationEngine.swift in Sources */,
-				069612AB2259B8B70097229D /* String+RegEx.swift in Sources */,
 				069612A72259B7CA0097229D /* RegExPattern.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

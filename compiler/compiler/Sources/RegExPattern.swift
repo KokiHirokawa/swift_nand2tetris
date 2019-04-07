@@ -8,7 +8,7 @@
 
 struct RegExPattern {
     
-    static let commentOut = #"(/{2}.*|/\*{1,2}.*\*/)"#
+    static let commentOut = #"(/{2}.*\n|/\*([\s\S]*?)\*/)"#
     
     struct Path {
         static let jackFilePath = #"(.+)\.jack$"#
