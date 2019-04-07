@@ -8,6 +8,17 @@
 
 import Foundation
 
-print("Hello, World!")
+func run() {
+    
+    if CommandLine.argc != 2 {
+        print("usage: ./compiler [dir|file path]")
+        return
+    }
+    
+    let path = CommandLine.arguments[1]
+    let analyzer = JackAnalyzer(path: path)
+    analyzer.run()
+    analyzer.output()
+}
 
-let fd = open(, <#T##oflag: Int32##Int32#>)
+run()
