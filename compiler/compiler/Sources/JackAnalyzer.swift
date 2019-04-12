@@ -21,80 +21,73 @@ class JackAnalyzer {
     
     func run() {
         
-        // codeを丸々取ってくるのはOK
         guard
             let data = fileManager.contents(atPath: path),
             var code = String(data: data, encoding: .ascii) else { return }
+        code = try! code.replace(pattern: RegExPattern.commentOut, withTemplate: "")
         
-        // exclude comment
-        code = try! code.replace(pattern: RegExPattern.commentOut, withTemplate: "\n")
+        // stackにpushした場合はindent=stack.count*2
+        var indent = 0
         
-        // lineで処理するのもOK
-        for line in code.components(separatedBy: .newlines) {
-
-            var statement = line
-            statement = statement.trimmingCharacters(in: .whitespaces)
-            if statement.isEmpty { continue }
-
-            var index = 0
-            while index != statement.length {
-
-                var char = statement[index]
+        var index = 0
+        while index != code.length {
+            
+            var char = code[index]
+            
+            // このあたりタイプごとにメソッド分けたい
+            if try! char.isMatch(pattern: RegExPattern.Token.symbol) {
                 
-                if try! char.isMatch(pattern: RegExPattern.Token.symbol) {
-
-                    if char == "<" {
-                        outputCode += "<symbol> &lt; </symbol>\n"
-                    } else if char == ">" {
-                        outputCode += "<symbol> &gt; </symbol>\n"
-                    } else if char == "&" {
-                        outputCode += "<symbol> &amp; </symbol>\n"
-                    } else {
-                        outputCode += "<symbol> \(char) </symbol>\n"
-                    }
-                    index += 1
-
-                } else if try! char.isMatch(pattern: #"\d"#) {
-
-                    var intConst = ""
-                    while try! !char.isMatch(pattern: #"\D"#) {
-                        intConst += char
-                        index += 1
-                        char = statement[index]
-                    }
-                    outputCode += "<integerConstant> \(intConst) </integerConstant>\n"
-
-                } else if try! char.isMatch(pattern: "[a-zA-Z_]") {
-
-                    var token = ""
-                    while try! !char.isMatch(pattern: #"[^\w]"#) {
-                        token += char
-                        index += 1
-                        char = statement[index]
-                    }
-
-                    if try! token.isMatch(pattern: RegExPattern.Token.keyword) {
-                        outputCode += "<keyword> \(token) </keyword>\n"
-                    } else {
-                        outputCode += "<identifier> \(token) </identifier>\n"
-                    }
-
-                } else if char == "\"" {
-
-                    var strConst = ""
-                    index += 1
-                    char = statement[index]
-                    while char != "\"" {
-                        strConst += char
-                        index += 1
-                        char = statement[index]
-                    }
-                    outputCode += "<stringConstant> \(strConst) </stringConstant>\n"
-                    index += 1
-
+                if char == "<" {
+                    outputCode += "<symbol> &lt; </symbol>\n"
+                } else if char == ">" {
+                    outputCode += "<symbol> &gt; </symbol>\n"
+                } else if char == "&" {
+                    outputCode += "<symbol> &amp; </symbol>\n"
                 } else {
-                    index += 1
+                    outputCode += "<symbol> \(char) </symbol>\n"
                 }
+                index += 1
+                
+            } else if try! char.isMatch(pattern: #"\d"#) {
+                
+                var intConst = ""
+                while try! !char.isMatch(pattern: #"\D"#) {
+                    intConst += char
+                    index += 1
+                    char = code[index]
+                }
+                outputCode += "<integerConstant> \(intConst) </integerConstant>\n"
+                
+            } else if try! char.isMatch(pattern: "[a-zA-Z_]") {
+                
+                var token = ""
+                while try! !char.isMatch(pattern: #"[^\w]"#) {
+                    token += char
+                    index += 1
+                    char = code[index]
+                }
+                
+                if try! token.isMatch(pattern: RegExPattern.Token.keyword) {
+                    outputCode += "<keyword> \(token) </keyword>\n"
+                } else {
+                    outputCode += "<identifier> \(token) </identifier>\n"
+                }
+                
+            } else if char == "\"" {
+                
+                var strConst = ""
+                index += 1
+                char = code[index]
+                while char != "\"" {
+                    strConst += char
+                    index += 1
+                    char = code[index]
+                }
+                outputCode += "<stringConstant> \(strConst) </stringConstant>\n"
+                index += 1
+                
+            } else {
+                index += 1
             }
         }
         

@@ -33,7 +33,6 @@ extension String {
         get {
             let startIndex = index(self.startIndex, offsetBy: r.lowerBound)
             let endIndex = index(self.startIndex, offsetBy: r.upperBound)
-            print(startIndex, endIndex)
             
             if !indices.contains(startIndex) || !indices.contains(endIndex) {
                 print("String index is out of bounds")
@@ -42,17 +41,6 @@ extension String {
             
             return self[startIndex..<endIndex].description
         }
-    }
-    
-    subscript(r: NSRange) -> String {
-        if r.lowerBound == NSNotFound {
-            print("String index is out of bounds")
-            print("string: \(self), range: \(r)")
-        }
-        
-        let nsString = self as NSString
-        let subString = nsString.substring(with: r)
-        return String(subString)
     }
     
     subscript(r: ClosedRange<Int>) -> String {
@@ -67,10 +55,20 @@ extension String {
             
             let startIndex = index(self.startIndex, offsetBy: lowerBound)
             let endIndex = index(self.startIndex, offsetBy: upperBound)
-            print(startIndex, endIndex)
             
             return self[startIndex...endIndex].description
         }
+    }
+    
+    subscript(r: NSRange) -> String {
+        if r.lowerBound == NSNotFound {
+            print("String index is out of bounds")
+            print("string: \(self), range: \(r)")
+        }
+        
+        let nsString = self as NSString
+        let subString = nsString.substring(with: r)
+        return String(subString)
     }
     
     func replace(pattern: String, withTemplate: String) throws -> String {
