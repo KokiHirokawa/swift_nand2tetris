@@ -19,6 +19,24 @@ class JackAnalyzer {
         outputCode = "<tokens>\n"
     }
     
+    func test() {
+        guard
+            let data = fileManager.contents(atPath: path),
+            var code = String(data: data, encoding: .ascii) else { return }
+        
+        let array = code.trimmingCharacters(in: .newlines)
+        
+        var cursorPoint = 0
+        while cursorPoint != code.length {
+            let char = code[cursorPoint]
+            if char == "\r" {
+                print("改行だー！")
+            }
+            print(char)
+            cursorPoint += 1
+        }
+    }
+    
     func run() {
         
         guard
@@ -34,7 +52,6 @@ class JackAnalyzer {
             
             var char = code[index]
             
-            // このあたりタイプごとにメソッド分けたい
             if try! char.isMatch(pattern: RegExPattern.Token.symbol) {
                 
                 if char == "<" {
