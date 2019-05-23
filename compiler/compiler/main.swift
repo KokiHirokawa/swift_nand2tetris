@@ -17,8 +17,7 @@ func run() {
     
     let path = CommandLine.arguments[1]
     let analyzer = JackAnalyzer(path: path)
-//    analyzer.run()
-    analyzer.test()
+    analyzer.run()
 //    analyzer.output()
 }
 

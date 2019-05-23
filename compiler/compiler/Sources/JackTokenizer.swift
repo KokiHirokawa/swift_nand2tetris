@@ -18,6 +18,7 @@ class JackTokenizer {
         return String(UnicodeScalar(UInt8(currentAsciiCode)))
     }
     private var tokens = [Token]()
+    private let lineFeed = 10
     
     init(path: String) {
         guard let fp = fopen(path, "r") else {
@@ -28,11 +29,6 @@ class JackTokenizer {
         self.currentAsciiCode = fgetc(fp)
     }
     
-    func next() {
-        currentAsciiCode = fgetc(fp)
-        column += 1
-    }
-    
     func tokenize() {
         
         if currentAsciiCode == EOF {
@@ -41,29 +37,27 @@ class JackTokenizer {
         
         excludeCommentOut()
         
-        // LF
-        if currentAsciiCode == 10 {
-            row += 1
-            column = 1
-        }
-        
-        let char = String(UnicodeScalar(UInt8(currentAsciiCode)))
-        
-        if try! char.isMatch(pattern: RegExPattern.Token.symbol) {
+        if try! currentChar.isMatch(pattern: RegExPattern.Token.symbol) {
             tokenizeSymbol()
-        } else if try! char.isMatch(pattern: #"\d"#) {
+        } else if try! currentChar.isMatch(pattern: RegExPattern.Token.integerConstant) {
             tokenizeIntConst()
-        } else if try! char.isMatch(pattern: "[a-zA-Z_]") {
+        } else if try! currentChar.isMatch(pattern: "[a-zA-Z_]") {
             tokenizeKeywordOrIdentifier()
-        } else if char == "\"" {
+        } else if currentChar == "\"" {
             tokenizeStrConst()
         } else {
             next()
         }
         
-        // check number of rows
-        print(row)
         tokenize()
+    }
+    
+    func getTokens() {
+        print("<tokens>")
+        tokens.forEach { token in
+            print("<\(token.type)> \(token.value) </\(token.type)> (row: \(token.row) col: \(token.col))")
+        }
+        print("</tokens>")
     }
     
     func excludeCommentOut() {
@@ -71,7 +65,7 @@ class JackTokenizer {
             next()
             switch currentChar {
             case "/":
-                while currentAsciiCode != 10 {
+                while currentAsciiCode != lineFeed {
                     next()
                 }
             case "*":
@@ -86,11 +80,22 @@ class JackTokenizer {
                     }
                 }
             default:
-                fatalError(#"illegal token "/"#)
+                // show line and row
+                fatalError(#"illegal token "/" (row: \#(row), column: \#(column))"#)
             }
         }
     }
     
+    private func next() {
+        currentAsciiCode = fgetc(fp)
+        if currentAsciiCode == lineFeed {
+            row += 1
+            column = 0
+        } else {
+            column += 1
+        }
+    }
+
     func tokenizeSymbol() {
         var value: String
         
@@ -140,6 +145,7 @@ class JackTokenizer {
     
     func tokenizeKeywordOrIdentifier() {
         var value = ""
+        let leadColumn = column
         
         while true {
             if try! currentChar.isMatch(pattern: #"[^\w]"#) {
@@ -151,7 +157,7 @@ class JackTokenizer {
                     type = .identifier
                 }
                 
-                appendToken(type: type, value: value, row: row, col: column)
+                appendToken(type: type, value: value, row: row, col: leadColumn)
                 break
             }
             

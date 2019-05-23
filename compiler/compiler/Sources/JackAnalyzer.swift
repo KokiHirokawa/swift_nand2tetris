@@ -13,102 +13,86 @@ class JackAnalyzer {
     private let fileManager = FileManager.default
     private let path: String
     private var outputCode: String
+    private let tokenizer: JackTokenizer
     
     init(path: String) {
         self.path = path
-        outputCode = "<tokens>\n"
-    }
-    
-    func test() {
-        guard
-            let data = fileManager.contents(atPath: path),
-            var code = String(data: data, encoding: .ascii) else { return }
-        
-        let array = code.trimmingCharacters(in: .newlines)
-        
-        var cursorPoint = 0
-        while cursorPoint != code.length {
-            let char = code[cursorPoint]
-            if char == "\r" {
-                print("改行だー！")
-            }
-            print(char)
-            cursorPoint += 1
-        }
+        self.tokenizer = JackTokenizer(path: path)
+        self.outputCode = ""
     }
     
     func run() {
         
-        guard
-            let data = fileManager.contents(atPath: path),
-            var code = String(data: data, encoding: .ascii) else { return }
-        code = try! code.replace(pattern: RegExPattern.commentOut, withTemplate: "")
+        tokenizer.tokenize()
+        tokenizer.getTokens ()
         
-        // stackにpushした場合はindent=stack.count*2
-        var indent = 0
+//        guard
+//            let data = fileManager.contents(atPath: path),
+//            var code = String(data: data, encoding: .ascii) else { return }
+//        code = try! code.replace(pattern: RegExPattern.commentOut, withTemplate: "")
         
-        var index = 0
-        while index != code.length {
-            
-            var char = code[index]
-            
-            if try! char.isMatch(pattern: RegExPattern.Token.symbol) {
-                
-                if char == "<" {
-                    outputCode += "<symbol> &lt; </symbol>\n"
-                } else if char == ">" {
-                    outputCode += "<symbol> &gt; </symbol>\n"
-                } else if char == "&" {
-                    outputCode += "<symbol> &amp; </symbol>\n"
-                } else {
-                    outputCode += "<symbol> \(char) </symbol>\n"
-                }
-                index += 1
-                
-            } else if try! char.isMatch(pattern: #"\d"#) {
-                
-                var intConst = ""
-                while try! !char.isMatch(pattern: #"\D"#) {
-                    intConst += char
-                    index += 1
-                    char = code[index]
-                }
-                outputCode += "<integerConstant> \(intConst) </integerConstant>\n"
-                
-            } else if try! char.isMatch(pattern: "[a-zA-Z_]") {
-                
-                var token = ""
-                while try! !char.isMatch(pattern: #"[^\w]"#) {
-                    token += char
-                    index += 1
-                    char = code[index]
-                }
-                
-                if try! token.isMatch(pattern: RegExPattern.Token.keyword) {
-                    outputCode += "<keyword> \(token) </keyword>\n"
-                } else {
-                    outputCode += "<identifier> \(token) </identifier>\n"
-                }
-                
-            } else if char == "\"" {
-                
-                var strConst = ""
-                index += 1
-                char = code[index]
-                while char != "\"" {
-                    strConst += char
-                    index += 1
-                    char = code[index]
-                }
-                outputCode += "<stringConstant> \(strConst) </stringConstant>\n"
-                index += 1
-                
-            } else {
-                index += 1
-            }
-        }
-        
-        outputCode += "</tokens>"
+//        var index = 0
+//        while index != code.length {
+//
+//            var char = code[index]
+//
+//            if try! char.isMatch(pattern: RegExPattern.Token.symbol) {
+//
+//                if char == "<" {
+//                    outputCode += "<symbol> &lt; </symbol>\n"
+//                } else if char == ">" {
+//                    outputCode += "<symbol> &gt; </symbol>\n"
+//                } else if char == "&" {
+//                    outputCode += "<symbol> &amp; </symbol>\n"
+//                } else {
+//                    outputCode += "<symbol> \(char) </symbol>\n"
+//                }
+//                index += 1
+//
+//            } else if try! char.isMatch(pattern: #"\d"#) {
+//
+//                var intConst = ""
+//                while try! !char.isMatch(pattern: #"\D"#) {
+//                    intConst += char
+//                    index += 1
+//                    char = code[index]
+//                }
+//                outputCode += "<integerConstant> \(intConst) </integerConstant>\n"
+//
+//            } else if try! char.isMatch(pattern: "[a-zA-Z_]") {
+//
+//                var token = ""
+//                while try! !char.isMatch(pattern: #"[^\w]"#) {
+//                    token += char
+//                    index += 1
+//                    char = code[index]
+//                }
+//
+//                if try! token.isMatch(pattern: RegExPattern.Token.keyword) {
+//                    outputCode += "<keyword> \(token) </keyword>\n"
+//                } else {
+//                    outputCode += "<identifier> \(token) </identifier>\n"
+//                }
+//
+//            } else if char == "\"" {
+//
+//                var strConst = ""
+//                index += 1
+//                char = code[index]
+//                while char != "\"" {
+//                    strConst += char
+//                    index += 1
+//                    char = code[index]
+//                }
+//                outputCode += "<stringConstant> \(strConst) </stringConstant>\n"
+//                index += 1
+//
+//            } else {
+//                index += 1
+//            }
+//        }
+//
+//        outputCode += "</tokens>"
     }
     
     func output() {
