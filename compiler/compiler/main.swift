@@ -9,7 +9,7 @@
 import Foundation
 
 func run() {
-    
+
     if CommandLine.argc != 2 {
         print("usage: ./compiler [dir|file path]")
         return

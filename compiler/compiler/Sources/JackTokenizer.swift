@@ -52,12 +52,17 @@ class JackTokenizer {
         tokenize()
     }
     
-    func getTokens() {
+    func printTokens() {
         print("<tokens>")
         tokens.forEach { token in
             print("<\(token.type)> \(token.value) </\(token.type)> (row: \(token.row) col: \(token.col))")
         }
         print("</tokens>")
+    }
+    
+    // 一旦雑に実装
+    func getTokens() -> [Token] {
+        return tokens
     }
     
     func excludeCommentOut() {
