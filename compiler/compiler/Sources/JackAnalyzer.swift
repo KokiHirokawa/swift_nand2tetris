@@ -174,76 +174,25 @@ class JackAnalyzer {
         return node
     }
     
-//    func compileClassVarDec() -> Node {
-//
-//        let first = tokenIndex
-//
-//        while currentToken.value != ";" {
-//            nextToken()
-//        }
-//
-//        let node = Node(kind: .classVarDec, first: first, last: tokenIndex, nodes: nil)
-//        nextToken()
-//        print("  <classVarDec></classVarDec>")
-//        return node
-//    }
-    
-//    func compileSubroutineDec() -> Node {
-//
-//        var numberOfBraces = 0
-//        var index = tokenIndex
-//
-//        while index != tokens.count - 1 {
-//            let value = tokens[index].value
-//            if value == "{" {
-//                numberOfBraces += 1
-//            }
-//            index += 1
-//        }
-//
-//        index = tokenIndex
-//
-//        while numberOfBraces != 0 {
-//
-//            let token = tokens[index]
-//            if token.value == "}" {
-//                numberOfBraces -= 1
-//            }
-//            index += 1
-//        }
-//
-//        var node = Node(kind: .subroutineDec, first: tokenIndex, last: index-1, nodes: [])
-//
-//        node.nodes?.append(Node(kind: .identifier, first: tokenIndex, last: tokenIndex, nodes: nil))
-//        tokenIndex += 1
-//
-//        node.nodes?.append(compileType())
-//
-//        node.nodes?.append(Node(kind: .identifier, first: tokenIndex, last: tokenIndex, nodes: nil))
-//        tokenIndex += 1
-//
-//        node.nodes?.append(Node(kind: .symbol, first: tokenIndex, last: tokenIndex, nodes: nil))
-//        tokenIndex += 1
-//
-//        return node
-//    }
-    
     func compileSubroutineDec() -> Node {
-        
+
         let first = tokenIndex
+        var index = tokenIndex
         
-        while currentToken.value != "{" {
-            nextToken()
+        while tokens[index].value != "{" {
+            index += 1
         }
         
         var numberOfBraces = 1
-        nextToken()
+        index += 1
         
         while true {
             
-            if currentToken.value == "{" {
+            let value = tokens[index].value
+            
+            if value == "{" {
                 numberOfBraces += 1
-            } else if currentToken.value == "}" {
+            } else if value == "}" {
                 numberOfBraces -= 1
             }
             
@@ -251,18 +200,42 @@ class JackAnalyzer {
                 break
             }
             
-            nextToken()
+            index += 1
         }
-        
-        let node = Node(kind: .subroutineDec, first: first, last: tokenIndex, nodes: nil)
+
+        let last = index
+
+        var node = Node(kind: .subroutineDec, first: first, last: last, nodes: [])
+        print("  <subroutineDec>")
+
+        node.nodes?.append(Node(kind: .keyword, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("    <keyword> \(currentToken.value) </keyword>")
         nextToken()
-        print("  <subroutineDec></subroutineDec>")
+
+        node.nodes?.append(compileType())
+
+        node.nodes?.append(Node(kind: .identifier, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("    <identifier> \(currentToken.value) </identifier>")
+        nextToken()
+
+        node.nodes?.append(Node(kind: .symbol, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("    <symbol> \(currentToken.value) </symbol>")
+        nextToken()
+        
+        node.nodes?.append(compileParameterList())
+        
+        node.nodes?.append(Node(kind: .symbol, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("    <symbol> \(currentToken.value) </symbol>")
+        nextToken()
+        
+        node.nodes?.append(compileSubroutineBody(last: last))
+
+        print("  </subroutineDec>")
         return node
     }
     
     func compileType() -> Node {
         var node = Node(kind: .type, first: tokenIndex, last: tokenIndex, nodes: [])
-        
         
         if try! currentToken.value.isMatch(pattern: "^(int|char|boolean)$") {
             node.nodes?.append(Node(kind: .keyword, first: tokenIndex, last: tokenIndex, nodes: nil))
@@ -277,16 +250,36 @@ class JackAnalyzer {
     }
     
     func compileParameterList() -> Node {
-        // テキトー
-        let node = Node(kind: .parameterList, first: tokenIndex, last: tokenIndex, nodes: nil)
+        
+        let first = tokenIndex
+        
+        while currentToken.value != ")" {
+            nextToken()
+        }
+        
+        let last = tokenIndex
+        
+        let node = Node(kind: .parameterList, first: first, last: last, nodes: [])
+        print("    <parameterList>")
+        print("    </parameterList>")
         return node
     }
     
-    func compileVarDec() -> Node {
-        // テキトー
-        let node = Node(kind: .parameterList, first: tokenIndex, last: tokenIndex, nodes: nil)
+    func compileSubroutineBody(last: Int) -> Node {
+        let node = Node(kind: .subroutineBody, first: tokenIndex, last: last, nodes: [])
+        
+        while tokenIndex != last {
+            nextToken()
+        }
+        
+        print("    <subroutineBody>")
+        print("    </subroutineBody>")
+        nextToken()
         return node
     }
+    
+//    func compileVarDec() -> Node {
+//    }
     
     func output() {
 //        guard
