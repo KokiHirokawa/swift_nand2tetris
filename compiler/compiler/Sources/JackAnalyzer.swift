@@ -32,6 +32,12 @@ enum NodeKind {
     case className
     case subroutineName
     case varName
+    case statements
+    case letStatement
+    case ifStatement
+    case whileStatement
+    case doStatement
+    case returnStatement
 }
 
 class JackAnalyzer {
@@ -266,20 +272,83 @@ class JackAnalyzer {
     }
     
     func compileSubroutineBody(last: Int) -> Node {
-        let node = Node(kind: .subroutineBody, first: tokenIndex, last: last, nodes: [])
+        var node = Node(kind: .subroutineBody, first: tokenIndex, last: last, nodes: [])
+        print("    <subroutineBody>")
+        
+        node.nodes?.append(Node(kind: .symbol, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("    <symbol> \(currentToken.value) </symbol>")
+        nextToken()
         
         while tokenIndex != last {
-            nextToken()
+            
+            let value = currentToken.value
+            
+            if value == "var" {
+                let varDecNode = compileVarDec()
+                node.nodes?.append(varDecNode)
+            } else {
+                let statementsNode = compileStatements()
+                node.nodes?.append(statementsNode)
+                tokenIndex = last
+            }
         }
         
-        print("    <subroutineBody>")
-        print("    </subroutineBody>")
+        node.nodes?.append(Node(kind: .symbol, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("    <symbol> \(currentToken.value) </symbol>")
         nextToken()
+        
+        print("    </subroutineBody>")
         return node
     }
     
-//    func compileVarDec() -> Node {
-//    }
+    func compileVarDec() -> Node {
+        
+        let first = tokenIndex
+        var index = tokenIndex
+        
+        while tokens[index].value != ";" {
+            index += 1
+        }
+        
+        let last = index
+        
+        var node = Node(kind: .varDec, first: first, last: last, nodes: [])
+        print("      <varDec>")
+        
+        node.nodes?.append(Node(kind: .keyword, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("        <keyword> \(currentToken.value) </keyword>")
+        nextToken()
+        
+        node.nodes?.append(compileType())
+        
+        node.nodes?.append(Node(kind: .identifier, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("        <identifier> \(currentToken.value) </identifier>")
+        nextToken()
+        
+        while tokenIndex != last {
+            node.nodes?.append(Node(kind: .symbol, first: tokenIndex, last: tokenIndex, nodes: nil))
+            print("        <symbol> \(currentToken.value) </symbol>")
+            nextToken()
+            
+            node.nodes?.append(Node(kind: .identifier, first: tokenIndex, last: tokenIndex, nodes: nil))
+            print("        <identifier> \(currentToken.value) </identifier>")
+            nextToken()
+        }
+        
+        node.nodes?.append(Node(kind: .symbol, first: tokenIndex, last: tokenIndex, nodes: nil))
+        print("        <symbol> \(currentToken.value) </symbol>")
+        nextToken()
+        
+        print("      </varDec>")
+        return node
+    }
+    
+    func compileStatements() -> Node {
+        let node = Node(kind: .statements, first: 0, last: 0, nodes: nil)
+        print("      <statements>")
+        print("      </statements>")
+        return node
+    }
     
     func output() {
 //        guard
